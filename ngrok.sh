@@ -54,15 +54,15 @@ install_go(){
 	# 判断操作系统位数下载不同的安装包
 	if [ $(getconf WORD_BIT) = '32' ] && [ $(getconf LONG_BIT) = '64' ];then
 		# 判断文件是否已经存在
-		if [ ! -f $SELFPATH/go1.7.6.linux-amd64.tar.gz ];then
-			wget https://www.golangtc.com/static/go/1.7.6/go1.7.6.linux-amd64.tar.gz --no-check-certificate
+		if [ ! -f $SELFPATH/go1.4.3.linux-amd64.tar.gz ];then
+			wget https://dl.google.com/go/go1.4.3.linux-amd64.tar.gz --no-check-certificate
 		fi
-	    tar zxvf go1.7.6.linux-amd64.tar.gz
+	    tar zxvf go1.4.3.linux-amd64.tar.gz
 	else
-		if [ ! -f $SELFPATH/go1.7.6.linux-386.tar.gz ];then
-			wget https://www.golangtc.com/static/go/1.7.6/go1.7.6.linux-386.tar.gz --no-check-certificate
+		if [ ! -f $SELFPATH/go1.4.3.linux-386.tar.gz ];then
+			wget https://dl.google.com/go/go1.4.3.linux-386.tar.gz --no-check-certificate
 		fi
-	    tar zxvf go1.7.6.linux-386.tar.gz
+	    tar zxvf go1.4.3.linux-386.tar.gz
 	fi
 	mv go /usr/local/
 	ln -s /usr/local/go/bin/* /usr/bin/
@@ -113,10 +113,8 @@ uninstall_ngrok(){
 
 # 编译客户端
 compile_client(){
-	cd /usr/local/go/src
-	GOOS=$1 GOARCH=$2 ./make.bash
-	cd /usr/local/ngrok/
-	GOOS=$1 GOARCH=$2 make release-client
+	cd /usr/local/go/src && GOOS=$1 GOARCH=$2 ./make.bash
+	cd /usr/local/ngrok/ && GOOS=$1 GOARCH=$2 make release-client
 }
 
 # 生成客户端
